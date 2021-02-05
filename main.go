@@ -26,7 +26,7 @@ var (
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	err := homeView.Template.Execute(w, nil)
+	err := homeView.Template.ExecuteTemplate(w, homeView.Layout, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -36,15 +36,15 @@ func home(w http.ResponseWriter, r *http.Request) {
 func contact(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	// fmt.Fprint(w, "To get in touch, please email <a href=\"mailto:support@lenslocked.com\">support@lenslocked.com</a>")
-	err := contactView.Template.Execute(w, nil)
+	err := contactView.Template.ExecuteTemplate(w, contactView.Layout, nil)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	homeView = views.NewView("views/home.gohtml")
-	contactView = views.NewView("views/contact.gohtml")
+	homeView = views.NewView("bootstrap", "views/home.gohtml")
+	contactView = views.NewView("bootstrap", "views/contact.gohtml")
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)
