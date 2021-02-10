@@ -9,10 +9,12 @@
 
   <body>
     {{template "navbar"}}
-    
+
     <div class="container-fluid">
       <!-- content goes here!!!! -->
       {{template "yield" .}}
+
+      {{template "footer"}}
     </div>
 
     <!-- jquery and bootstrap js files.... -->
