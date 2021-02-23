@@ -48,8 +48,13 @@ func (us *UserService) ByID(id uint) (*User, error) {
 		return nil, ErrNotFound
 	default:
 		return nil, err
-
 	}
+}
+
+// Create will create the provided user and backfill data
+// like the ID, created_at, deleted_at fields etc.
+func (us *UserService) Create(user *User) error {
+	return us.db.Create(user).Error
 }
 
 // Close the UserService database connection
