@@ -9,7 +9,6 @@ import (
 
 	// load postgres dialect from gorm
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
