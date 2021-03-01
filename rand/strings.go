@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 )
 
+// RememberTokenBytes is used to generate a remember token.
 const RememberTokenBytes = 32
 
 // Bytes will help to generate n random bytes, or will return an error if
