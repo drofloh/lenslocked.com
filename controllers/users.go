@@ -95,7 +95,6 @@ func (u *Users) Login(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
 	signIn(w, user)
 	http.Redirect(w, r, "/cookietest", http.StatusFound)
 }
