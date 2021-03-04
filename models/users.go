@@ -131,7 +131,6 @@ func (uv *userValidator) ByRemember(token string) (*User, error) {
 // Create will create the provided user and backfill data
 // like the ID, created_at, deleted_at fields etc.
 func (uv *userValidator) Create(user *User) error {
-
 	err := runUserValFuncs(user, uv.bcryptPassword, uv.setRememberIfUnset, uv.hmacRemember)
 	if err != nil {
 		return err
@@ -150,8 +149,11 @@ func (uv *userValidator) Update(user *User) error {
 
 // Delete will delete the user with the provided ID
 func (uv *userValidator) Delete(id uint) error {
-	if id == 0 {
-		return ErrInvalidID
+	var user User
+	user.ID = id
+	err := runUserValFuncs(&user, uv.idGreaterThan(0))
+	if err != nil {
+		return err
 	}
 	return uv.UserDB.Delete(id)
 }
@@ -191,6 +193,22 @@ func (uv *userValidator) setRememberIfUnset(user *User) error {
 	user.Remember = token
 	return nil
 }
+
+func (uv *userValidator) idGreaterThan(n uint) userValFunc {
+	return userValFunc(func(user *User) error {
+		if user.ID <= n {
+			return ErrInvalidID
+		}
+		return nil
+	})
+}
+
+// func (uv *userValidator) idGreaterThanZero(user *User) error {
+// 	if user.ID <= 0 {
+// 		return ErrInvalidID
+// 	}
+// 	return nil
+// }
 
 func newUserGorm(connectionInfo string) (*userGorm, error) {
 	db, err := gorm.Open("postgres", connectionInfo)
