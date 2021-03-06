@@ -12,8 +12,10 @@
 
     <div class="container-fluid">
       <!-- content goes here!!!! -->
-      {{template "alert" .}}
-      {{template "yield" .}}
+      {{if .Alert}}
+        {{template "alert" .Alert}}
+      {{end}}
+      {{template "yield" .Yield}}
 
       {{template "footer"}}
     </div>
