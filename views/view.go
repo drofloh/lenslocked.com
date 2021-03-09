@@ -9,8 +9,11 @@ import (
 )
 
 var (
-	LayoutDir   string = "views/layouts/"
+	// LayoutDir ...
+	LayoutDir string = "views/layouts/"
+	// TemplateDir ...
 	TemplateDir string = "views/"
+	// TemplateExt ...
 	TemplateExt string = ".gohtml"
 )
 

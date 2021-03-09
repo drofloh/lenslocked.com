@@ -1,9 +1,13 @@
 package views
 
 const (
-	AlertLvlError   = "danger"
+	// AlertLvlError ...
+	AlertLvlError = "danger"
+	// AlertLvlWarning ...
 	AlertLvlWarning = "warning"
-	AlertLvlInfo    = "info"
+	// AlertLvlInfo ...
+	AlertLvlInfo = "info"
+	// AlertLvlSuccess ...
 	AlertLvlSuccess = "success"
 
 	// AlertMsgGeneric is displayed when any random error is encountered by
