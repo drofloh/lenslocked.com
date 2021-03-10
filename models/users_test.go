@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func testingUserService() (*userGorm, error) {
+func testingServices() (*Services, error) {
 
 	// don't forget to ensure the test DB is created:
 	// "CREATE DATABASE lenslocked_test;"
@@ -20,18 +20,19 @@ func testingUserService() (*userGorm, error) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
-	ug, err := newUserGorm(psqlInfo)
+	services, err := NewServices(psqlInfo)
 	if err != nil {
 		return nil, err
 	}
-	ug.db.LogMode(false)
+	services.db.LogMode(false)
 	// Clear user table between tests
-	ug.DestructiveReset()
-	return ug, nil
+	services.DestructiveReset()
+	return services, nil
 }
 
 func TestCreateUser(t *testing.T) {
-	us, err := testingUserService()
+	services, err := testingServices()
+	us := services.User
 	if err != nil {
 		t.Fatal(err)
 	}
