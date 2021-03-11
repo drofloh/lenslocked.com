@@ -23,6 +23,30 @@ type galleryValidator struct {
 	GalleryDB
 }
 
+func (gv *galleryValidator) Create(gallery *Gallery) error {
+	err := runGalleryValFuncs(gallery,
+		gv.userIDRequired,
+		gv.titleRequired)
+	if err != nil {
+		return err
+	}
+	return gv.GalleryDB.Create(gallery)
+}
+
+func (gv *galleryValidator) userIDRequired(gallery *Gallery) error {
+	if gallery.UserID <= 0 {
+		return ErrUserIDRequired
+	}
+	return nil
+}
+
+func (gv *galleryValidator) titleRequired(gallery *Gallery) error {
+	if gallery.Title == "" {
+		return ErrTitleRequired
+	}
+	return nil
+}
+
 var _ GalleryDB = &galleryGorm{}
 
 // NewGalleryService ...
@@ -42,4 +66,15 @@ type galleryGorm struct {
 
 func (gg *galleryGorm) Create(gallery *Gallery) error {
 	return gg.db.Create(gallery).Error
+}
+
+type galleryValFunc func(*Gallery) error
+
+func runGalleryValFuncs(gallery *Gallery, fns ...galleryValFunc) error {
+	for _, fn := range fns {
+		if err := fn(gallery); err != nil {
+			return err
+		}
+	}
+	return nil
 }
