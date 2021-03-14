@@ -35,6 +35,9 @@ const (
 	// password provided.
 	ErrPasswordRequired modelError = "models: password is required"
 
+	// ErrTitleRequired ...
+	ErrTitleRequired modelError = "models: title is required"
+
 	// ErrIDInvalid is returned when an invalid ID is provided to a method
 	// like Delete.
 	ErrIDInvalid privateError = "modles: ID provided was invalid"
@@ -49,9 +52,6 @@ const (
 
 	// ErrUserIDRequired ...
 	ErrUserIDRequired privateError = "models: user ID is required"
-
-	// ErrTitleRequired ...
-	ErrTitleRequired modelError = "models: title is required"
 )
 
 type modelError string
