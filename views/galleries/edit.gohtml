@@ -1,7 +1,9 @@
 {{define "yield"}}
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-md-3">
+            <div class="col-md-12">
+                {{template "editGalleryForm" .}}
+                <!--
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         Edit your gallery.
@@ -10,6 +12,13 @@
                         {{template "editGalleryForm" .}}
                     </div>
                 </div>
+                -->
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+                {{template "uploadImageForm" .}}
+            </div>
+             <div class="col-md-10 col-md-offset-1">
+                {{template "deleteGalleryForm" .}}
             </div>
         </div>
     </div>
@@ -17,14 +26,34 @@
 {{end}}
 
 {{define "editGalleryForm"}}
-    <form action="/galleries/{{.ID}}/update" method="POST">
-    <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" id="title" value="{{.Title}}">
+  <form action="/galleries/{{.ID}}/update" method="POST">
+  <div class="row mb-3">
+    <label for="title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-7">
+      <input type="text" name="title" class="form-control" id="title" value="{{.Title}}">
     </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
-    <form action="/galleries/{{.ID}}/delete" method="POST">
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
+    <div class="col-sm-3">
+  <button type="submit" class="btn btn-default">Save</button>
+  </div>
+  </div>
+  
+  </form>
+{{end}}
+
+{{define "deleteGalleryForm"}}
+  <form action="/galleries/{{.ID}}/delete" method="POST">
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+{{end}}
+
+
+{{define "uploadImageForm"}}
+<form action="/galleries/{{.ID}}/images" method="POST" enctype="multipart/form-data">
+
+<div class="row mb-3">
+      <label for="images">Upload Images</label>
+      <input type="file" multiple="multiple" id="images" name="images">
+    </div>
+    <button type="submit" class="btn btn-default">Upload</button>
+</form>
 {{end}}
