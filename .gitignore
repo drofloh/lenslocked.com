@@ -4,3 +4,6 @@ lenslocked.com
 
 # dont inc experiments dir
 exp
+
+# dont store images
+images/**
