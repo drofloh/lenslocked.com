@@ -1,6 +1,12 @@
 {{define "yield"}}
     <div class="container">
         <div class="row justify-content-md-center">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>Edit your gallery</h2>
+                <a href="/galleries/{{.ID}}">
+                  View this gallery
+                </a>
+            </div>
             <div class="col-md-12">
                 {{template "editGalleryForm" .}}
             </div>
@@ -52,11 +58,19 @@
 {{end}}
 
 {{define "galleryImages"}}
-<ul>
-    {{range .Images}}
-    <li>
-        {{.}}
-    </li>
+{{range .ImagesSplitN 6}}
+  <div class="col-md-2">
+    {{range .}}
+    <a href="{{.}}">
+      <img src="{{.}}" class="thumbnail">
+    </a>
     {{end}}
-</ul>
+  </div>
+  {{end}}
+    <!-- dont put styles in middle of code, will be cleaned up -->
+    <style>
+        .thumbnail {
+            width: 100%;
+        }
+    </style>
 {{end}}
