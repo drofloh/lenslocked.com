@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/drofloh/lenslocked.com/context"
 	"github.com/drofloh/lenslocked.com/models"
@@ -20,6 +21,14 @@ func (mw *User) Apply(next http.Handler) http.HandlerFunc {
 // ApplyFn ...
 func (mw *User) ApplyFn(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path := r.URL.Path
+		// if the user is requesting a static asset or image we will not need to
+		// look up the currect user.
+		if strings.HasPrefix(path, "/assets/") || strings.HasPrefix(path, "/images/") {
+			next(w, r)
+			return
+		}
+
 		cookie, err := r.Cookie("remember_token")
 		if err != nil {
 			next(w, r)
