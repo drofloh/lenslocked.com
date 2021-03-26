@@ -8,8 +8,6 @@ import (
 	"github.com/drofloh/lenslocked.com/rand"
 	"github.com/jinzhu/gorm"
 
-	// load postgres dialect from gorm
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"golang.org/x/crypto/bcrypt"
 )
 

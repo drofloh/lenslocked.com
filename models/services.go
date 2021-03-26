@@ -1,10 +1,14 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	// load postgres dialect from gorm
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+)
 
 // NewServices ...
-func NewServices(connectionInfo string) (*Services, error) {
-	db, err := gorm.Open("postgres", connectionInfo)
+func NewServices(dialect, connectionInfo string) (*Services, error) {
+	db, err := gorm.Open(dialect, connectionInfo)
 	if err != nil {
 		return nil, err
 	}
