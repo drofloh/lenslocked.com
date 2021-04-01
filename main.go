@@ -30,7 +30,7 @@ func main() {
 	must(err)
 	defer services.Close()
 	// services.DestructiveReset()
-	// services.AutoMigrate()
+	services.AutoMigrate()
 
 	r := mux.NewRouter()
 	staticC := controllers.NewStatic()
