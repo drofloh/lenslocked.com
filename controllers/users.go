@@ -71,7 +71,12 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 		return
 	}
-	http.Redirect(w, r, "/galleries", http.StatusFound)
+	alert := views.Alert{
+		Level:   views.AlertLvlSuccess,
+		Message: "Welcome to lenslocked.com!",
+	}
+	views.RedirectAlert(w, r, "/galleries", http.StatusFound, alert)
+	// http.Redirect(w, r, "/galleries", http.StatusFound)
 }
 
 // LoginForm ...
@@ -110,6 +115,7 @@ func (u *Users) Login(w http.ResponseWriter, r *http.Request) {
 		u.LoginView.Render(w, r, vd)
 		return
 	}
+
 	http.Redirect(w, r, "/galleries", http.StatusFound)
 }
 
