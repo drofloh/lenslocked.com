@@ -7,7 +7,7 @@
                         Sign Up Now!
                     </div>
                     <div class="card-body">
-                        {{template "signupForm"}}
+                        {{template "signupForm" .}}
                     </div>
                 </div>
             </div>
@@ -21,11 +21,11 @@
     {{csrfField}}
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp">
+        <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" value="{{.Name}}">
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{.Email}}">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
