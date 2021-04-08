@@ -7,3 +7,6 @@ exp
 
 # dont store images
 images/**
+
+# dont add .config
+.config

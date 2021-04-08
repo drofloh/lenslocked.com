@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/drofloh/lenslocked.com/context"
+	"github.com/drofloh/lenslocked.com/email"
 	"github.com/drofloh/lenslocked.com/models"
 	"github.com/drofloh/lenslocked.com/rand"
 	"github.com/drofloh/lenslocked.com/views"
@@ -13,12 +14,13 @@ import (
 // NewUsers used to create a new users controller.
 // this tempplate with panic if the templates are not parsed correctly,
 // and should only be used during initial setup.
-func NewUsers(us models.UserService) *Users {
+func NewUsers(us models.UserService, emailer *email.Client) *Users {
 	return &Users{
 		NewView:   views.NewView("bootstrap", "users/new"),
 		LoginView: views.NewView("bootstrap", "users/login"),
 
-		us: us,
+		us:      us,
+		emailer: emailer,
 	}
 }
 
@@ -27,6 +29,7 @@ type Users struct {
 	NewView   *views.View
 	LoginView *views.View
 	us        models.UserService
+	emailer   *email.Client
 }
 
 // New used to render the form where a user can creaste a new user account.
@@ -66,6 +69,7 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 		u.NewView.Render(w, r, vd)
 		return
 	}
+	u.emailer.Welcome(user.Name, user.Email)
 	err := u.signIn(w, &user)
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusFound)

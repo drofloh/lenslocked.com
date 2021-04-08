@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/drofloh/lenslocked.com/controllers"
+	"github.com/drofloh/lenslocked.com/email"
 	"github.com/drofloh/lenslocked.com/middleware"
 	"github.com/drofloh/lenslocked.com/models"
 	"github.com/drofloh/lenslocked.com/rand"
@@ -32,9 +33,16 @@ func main() {
 	// services.DestructiveReset()
 	services.AutoMigrate()
 
+	mgCfg := cfg.Mailgun
+	emailer := email.NewClient(
+		email.WithSender("lenslocked.com",
+			"support@sandbox7a437f7101ec4004a9ea20758c17ba66.mailgun.org"),
+		email.WithMailgun(mgCfg.Domain, mgCfg.APIKey, mgCfg.PublicAPIKey),
+	)
+
 	r := mux.NewRouter()
 	staticC := controllers.NewStatic()
-	usersC := controllers.NewUsers(services.User)
+	usersC := controllers.NewUsers(services.User, emailer)
 	galleriesC := controllers.NewGalleries(services.Gallery, services.Image, r)
 
 	b, err := rand.Bytes(32)

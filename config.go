@@ -49,6 +49,7 @@ type Config struct {
 	Pepper   string         `json:"pepper"`
 	HMACKey  string         `json:"hmac_key"`
 	Database PostgresConfig `json:"database"`
+	Mailgun  MailgunConfig  `json:"mailgun"`
 }
 
 // DefaultConfig ...
@@ -60,6 +61,12 @@ func DefaultConfig() Config {
 		HMACKey:  "secret-key",
 		Database: DefaultPostgresConfig(),
 	}
+}
+
+type MailgunConfig struct {
+	APIKey       string `json:"api_key,omitempty"`
+	PublicAPIKey string `json:"public_api_key,omitempty"`
+	Domain       string `json:"domain,omitempty"`
 }
 
 // IsProd ...
