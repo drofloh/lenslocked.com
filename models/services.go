@@ -56,18 +56,6 @@ func NewServices(cfgs ...ServicesConfig) (*Services, error) {
 		}
 	}
 	return &s, nil
-
-	// db, err := gorm.Open(dialect, connectionInfo)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// db.LogMode(true)
-	// return &Services{
-	// 	User:    NewUserService(db),
-	// 	Gallery: NewGalleryService(db),
-	// 	Image:   NewImageService(),
-	// 	db:      db,
-	// }, nil
 }
 
 // Services ...
@@ -85,7 +73,7 @@ func (s *Services) Close() error {
 
 // DestructiveReset drops all table and rebuilds.
 func (s *Services) DestructiveReset() error {
-	err := s.db.DropTableIfExists(&User{}, &Gallery{}).Error
+	err := s.db.DropTableIfExists(&User{}, &Gallery{}, &pwReset{}).Error
 	if err != nil {
 		return err
 	}
@@ -94,5 +82,5 @@ func (s *Services) DestructiveReset() error {
 
 // AutoMigrate will attempt to automatically migrate all tables.
 func (s *Services) AutoMigrate() error {
-	return s.db.AutoMigrate(&User{}, &Gallery{}).Error
+	return s.db.AutoMigrate(&User{}, &Gallery{}, &pwReset{}).Error
 }

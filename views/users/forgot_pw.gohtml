@@ -1,16 +1,16 @@
 {{define "yield"}}
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        Sign Up Now!
+                        <h3>Forgot your Password?</h3>
                     </div>
                     <div class="card-body">
-                        {{template "signupForm" .}}
+                        {{template "forgotPwForm" .}}
                     </div>
                     <div class="card-footer">
-                        <a href="/login">Already have an account?</a>
+                        <a href="/login">Remember your password?</a>
                     </div>
                 </div>
             </div>
@@ -19,22 +19,14 @@
   
 {{end}}
 
-{{define "signupForm"}}
-    <form action="/signup" method="POST">
+{{define "forgotPwForm"}}
+    <form action="/forgot" method="POST">
     {{csrfField}}
-    <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" value="{{.Name}}">
-    </div>
     <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
         <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value="{{.Email}}">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" id="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {{end}}
